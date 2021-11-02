@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script type='text/javascript' src='script.js'></script>
+    <title>App Auditorios</title>
+    <style>
+        td {
+            border: 1px solid black;
+            border-collapse: separate;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Proyecto alquiler de auditorios</h1>
+        <p>En esta página usted podrá ver, crear, actualizar y eliminar auditorios, categorías de auditorios,
+            clientes, mensajes, reservas, calificaciones de reservas y usuarios administradores.
+            <br>
+            <br>
+            Para comenzar, dé click en el apartado de su preferencia y siga las instrucciones.
+            <br>
+            <br>
+            <p><strong>INSTRUCCIONES DE BORRADO</strong></p>
+            <p>Por favor siga estas instrucciones para borrar exitosamente los siguientes elementos:</p>
+            <ul>
+                <li><strong>Categorías:</strong> borre primero los auditorios asociados a esa categoría.</li>
+                <li><strong>Auditorios:</strong> borre primero los mensajes y las reservas asociados a ese auditorio.</li>
+                <li><strong>Clientes:</strong> borre primero los mensajes y las reservas asociados a ese cliente.</li>
+                <li><strong>Mensajes:</strong> sin restricciones de borrado.</li>
+                <li><strong>Reservas:</strong> borre primero las calificaciones de esa reserva.</li>
+                <li><strong>Calificaciones:</strong> sin restricciones de borrado.</li>
+                <li><strong>Administradores:</strong> sin restricciones de borrado.</li>
+            </ul>
+        </p>
+    </header>
+    <div id="categorias">
+        <h3>Categorías</h3>
+        <details>
+            <summary>Acciones categorías</summary>
+            <p>Para crear una nueva categoría, ingrese los datos correspondientes y dé click en el botón "Crear categoría".</p>
+            <p>Para ver la lista de categorías registradas, dé click en el botón "Ver categorías".</p>
+            <p>Para editar una categoría, dé click en el botón "Ver categorías", luego en el botón "Editar"
+                junto a la categoría que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar categoría".</p>
+            <p>Para borrar una categoría, dé click en el botón "Ver categorías" y luego en el botón "Borrar"
+                junto a la categoría que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_category" style="display: none;">
+                <input type="text" id="name_categoria" placeholder="Nombre categoría"><br>
+                <input type="text" id="description_categoria" placeholder="Descripción"><br>
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostCategory)">Crear categoría</button>
+            <button onclick="peticionGet(endGetCategory)">Ver categorías</button>
+            <button id="btn_actu_categoria" onclick="peticionPut(endPutCategory)" style="display: none;">Actualizar categoría</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con las categorías encontradas-->
+            <div id="tabla_categorias">
+
+            </div>
+        </details>
+    </div>
+    <div id="auditorios">
+        <hr>
+        <h3>Auditorios</h3>
+        <details>
+            <summary>Acciones auditorios</summary>
+            <p>Para crear un nuevo auditorio, ingrese los datos correspondientes y dé click en el botón "Crear auditorio".</p>
+            <p>Para ver la lista de auditorios registrados, dé click en el botón "Ver auditorios".</p>
+            <p>Para editar un auditorio, dé click en el botón "Ver auditorios", luego en el botón "Editar"
+                junto al auditorio que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar auditorio".</p>
+            <p>Para borrar un auditorio, dé click en el botón "Ver auditorios" y luego en el botón "Borrar"
+                junto al auditorio que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_audience" style="display: none;">
+                <input type="text" id="owner_auditorio" placeholder="Propietario"><br>
+                <input type="text" id="name_auditorio" placeholder="Nombre del auditorio"><br>
+                <input type="number" id="capacity_auditorio" placeholder="Capacidad del auditorio"><br>
+                <input type="text" id="description_auditorio" placeholder="Descripción" size=100><br>
+                <select id="category_id_auditorio">
+                
+                </select>
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostAudience)">Crear auditorio</button>
+            <button onclick="peticionGet(endGetAudience)">Ver auditorios</button>
+            <button id="btn_actu_auditorio" onclick="peticionPut(endPutAudience)" style="display: none;">Actualizar auditorio</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con los auditorios encontrados-->
+            <div id="tabla_auditorios">
+
+            </div>
+        </details>
+    </div>
+    <div id="clientes">
+        <hr>
+        <h3>Clientes</h3>
+        <details>
+            <summary>Acciones clientes</summary>
+            <p>Para crear un nuevo cliente, ingrese los datos correspondientes y dé click en el botón "Registrar cliente".</p>
+            <p>Para ver la lista de clientes registrados, dé click en el botón "Ver clientes".</p>
+            <p>Para editar un cliente, dé click en el botón "Ver clientes", luego en el botón "Editar"
+                junto al cliente que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar cliente".</p>
+            <p>Para borrar un cliente, dé click en el botón "Ver clientes" y luego en el botón "Borrar"
+                junto al cliente que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_client" style="display: none;">
+                <input type="text" id="name_cliente" placeholder="Nombre del cliente"><br>
+                <input type="text" id="email_cliente" placeholder="Email del cliente"><br>
+                <input type="number" id="age_cliente" placeholder="Edad del cliente"><br>
+                <input type="password" id="password_cliente" placeholder="Contraseña"><br>
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostClient)">Registrar cliente</button>
+            <button onclick="peticionGet(endGetClient)">Ver clientes</button>
+            <button id="btn_actu_cliente" onclick="peticionPut(endPutClient)" style="display: none;">Actualizar cliente</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con los clientes encontrados-->
+            <div id="tabla_clientes">
+
+            </div>
+        </details>
+    </div>
+    <div id="mensajes">
+        <hr>
+        <h3>Mensajes</h3>
+        <details>
+            <summary>Acciones mensajes</summary>
+            <p>Para crear un nuevo mensaje, ingrese los datos correspondientes y dé click en el botón "Crear mensaje".</p>
+            <p>Para ver la lista de mensajes registrados, dé click en el botón "Ver mensajes".</p>
+            <p>Para editar un mensaje, dé click en el botón "Ver mensajes", luego en el botón "Editar"
+                junto al mensaje que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar mensaje".</p>
+            <p>Para borrar un mensaje, dé click en el botón "Ver mensajes" y luego en el botón "Borrar"
+                junto al mensaje que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_message" style="display: none;">
+                <select id="audience_id_mensaje">
+                    
+                </select>
+                <br>
+                <select id="client_id_mensaje">
+                    
+                </select>
+                <br>
+                <input type="text" id="message_text" placeholder="Mensaje" size=100><br>
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostMessage)">Enviar mensaje</button>
+            <button onclick="peticionGet(endGetMessage)">Ver mensajes</button>
+            <button id="btn_actu_mensaje" onclick="peticionPut(endPutMessage)" style="display: none;">Actualizar mensaje</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con los mensajes encontrados-->
+            <div id="tabla_mensajes">
+
+            </div>
+        </details>
+    </div>
+    <div id="reservas">
+        <hr>
+        <h3>Reservas</h3>
+        <details>
+            <summary>Acciones reservas</summary>
+            <p>Para crear una nueva reserva, ingrese los datos correspondientes y dé click en el botón "Crear reserva".</p>
+            <p>Para ver la lista de reservas registradas, dé click en el botón "Ver reservas".</p>
+            <p>Para editar una reserva, dé click en el botón "Ver reserva", luego en el botón "Editar"
+                junto a la reserva que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar reserva".</p>
+            <p>Para borrar una reserva, dé click en el botón "Ver reservas" y luego en el botón "Borrar"
+                junto a la reserva que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_reservation" style="display: none;">
+                <select id="audience_id_reserva">
+                
+                </select>
+                <br>
+                <select id="client_id_reserva">
+                    
+                </select>
+                <br>
+                <label for="start_date_reserva">Fecha de entrega:</label>
+                <input type="datetime-local" id="start_date_reserva" onchange="limitarDevolucionReserva()"><br>
+                <label for="devolution_date_reserva">Fecha de devolución</label>
+                <input type="datetime-local" id="devolution_date_reserva"><br> 
+                <select id="status_reserva" style="display: none;">
+                    <option value="created">Creada</option>
+                    <option value="programmed">Programada</option>
+                    <option value="canceled">Cancelada</option>
+                    <option value="done">Realizada</option>
+                </select>
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostReservation)">Crear reserva</button>
+            <button onclick="peticionGet(endGetReservation)">Ver reservas</button>
+            <button id="btn_actu_reserva" onclick="peticionPut(endPutReservation)" style="display: none;">Actualizar reserva</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con las reservas encontradas-->
+            <div id="tabla_reservas">
+
+            </div>
+        </details>
+    </div>
+    <div id="calificacion_reservas">
+        <hr>
+        <h3>Calificación de reservas</h3>
+        <details>
+            <summary>Acciones calificaciones</summary>
+            <p>Para crear una nueva calificación, ingrese los datos correspondientes y dé click en el botón "Calificar reserva".</p>
+            <p>Para ver la lista de calificaciones registradas, dé click en el botón "Ver calificaciones".</p>
+            <p>Para editar una calificación, dé click en el botón "Ver calificaciones", luego en el botón "Editar"
+                junto a la calificación que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar calificación".</p>
+            <p>Para borrar una calificación, dé click en el botón "Ver calificaciones" y luego en el botón "Borrar"
+                junto a la calificación que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_score" style="display: none;">
+                <select id="reservation_id_calificacion">
+                    
+                </select>
+                <br>
+                <select id="score_calificacion">
+                    <option value="default">Seleccione calificación</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <br>
+                <input type="text" id="message_calificacion" placeholder="Mensaje" size=100><br> 
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostScore)">Calificar reserva</button>
+            <button onclick="peticionGet(endGetScore)">Ver calificaciones</button>
+            <button id="btn_actu_calificacion" onclick="peticionPut(endPutScore)" style="display: none;">Actualizar calificación</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con las reservas encontradas-->
+            <div id="tabla_calificaciones">
+
+            </div>
+        </details>
+    </div>
+    <div id="administradores">
+        <hr>
+        <h3>Administradores</h3>
+        <details>
+            <summary>Acciones administradores</summary>
+            <p>Para crear un nuevo administrador, ingrese los datos correspondientes y dé click en el botón "Crear admin".</p>
+            <p>Para ver la lista de administradores registrados, dé click en el botón "Ver admins".</p>
+            <p>Para editar un administrador, dé click en el botón "Ver admins", luego en el botón "Editar"
+                junto al administrador que desea editar, llene los campos con la nueva información y dé click en
+                "Actualizar administrador".</p>
+            <p>Para borrar un administrador, dé click en el botón "Ver admins" y luego en el botón "Borrar"
+                junto al administrador que desea borrar.
+                <br><br>
+                <strong>Nota: Vea las instrucciones de borrado arriba antes de borrar.</strong> 
+            </p>
+            <form>
+                <input type="number" id="id_admin" style="display: none;">
+                <input type="text" id="name_admin" placeholder="Nombre"><br>
+                <input type="text" id="email_admin" placeholder="Correo"><br>
+                <input type="password" id="password_admin" placeholder="Contraseña"><br> 
+            </form>
+            <br>
+            <button onclick="peticionPost(endPostAdmin)">Crear admin</button>
+            <button onclick="peticionGet(endGetAdmin)">Ver admins</button>
+            <button id="btn_actu_admin" onclick="peticionPut(endPutAdmin)" style="display: none;">Actualizar administrador</button>
+            <br>
+            <br>
+            <!--Aquí se creará la tabla con los administradores encontrados-->
+            <div id="tabla_admins">
+
+            </div>
+        </details>
+    </div>
+	<footer id="Sobre">
+		<hr>
+        <p>Creado por grupo 7 G12 para Mision TIC 2022.</p>
+	</footer>
+</body>
+</html>
